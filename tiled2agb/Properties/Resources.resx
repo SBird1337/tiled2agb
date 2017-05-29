@@ -126,17 +126,80 @@
   <data name="STR_ENCODING_CSV" xml:space="preserve">
     <value>csv</value>
   </data>
+  <data name="STR_EVTTYPE_ITEM" xml:space="preserve">
+    <value>evt_item</value>
+  </data>
+  <data name="STR_EVTTYPE_PERSON" xml:space="preserve">
+    <value>evt_person</value>
+  </data>
+  <data name="STR_EVTTYPE_SIGN" xml:space="preserve">
+    <value>evt_sign</value>
+  </data>
+  <data name="STR_EVTTYPE_TRIGGER" xml:space="preserve">
+    <value>evt_trigger</value>
+  </data>
+  <data name="STR_EVTTYPE_WARP" xml:space="preserve">
+    <value>evt_warp</value>
+  </data>
+  <data name="STR_EVT_HEIGHT" xml:space="preserve">
+    <value>height</value>
+  </data>
+  <data name="STR_EVT_P_F3" xml:space="preserve">
+    <value>field_3</value>
+  </data>
+  <data name="STR_EVT_P_FB" xml:space="preserve">
+    <value>field_b</value>
+  </data>
+  <data name="STR_EVT_P_FD" xml:space="preserve">
+    <value>field_d</value>
+  </data>
+  <data name="STR_EVT_P_FLAG" xml:space="preserve">
+    <value>flag</value>
+  </data>
+  <data name="STR_EVT_P_IMG" xml:space="preserve">
+    <value>image</value>
+  </data>
+  <data name="STR_EVT_P_MOVEMENT" xml:space="preserve">
+    <value>movement_area</value>
+  </data>
+  <data name="STR_EVT_P_NR" xml:space="preserve">
+    <value>nr</value>
+  </data>
+  <data name="STR_EVT_P_RIVAL" xml:space="preserve">
+    <value>rival</value>
+  </data>
+  <data name="STR_EVT_P_RUNBEHAV" xml:space="preserve">
+    <value>running_behavior</value>
+  </data>
+  <data name="STR_EVT_P_SIGHT" xml:space="preserve">
+    <value>sight_distance</value>
+  </data>
+  <data name="STR_EVT_P_TRAINER" xml:space="preserve">
+    <value>trainer</value>
+  </data>
+  <data name="STR_EVT_SCRIPT" xml:space="preserve">
+    <value>script_label</value>
+  </data>
+  <data name="STR_EVT_TYPE" xml:space="preserve">
+    <value>evt_type</value>
+  </data>
   <data name="STR_HEAD_BATTLETYPE" xml:space="preserve">
     <value>header_battletype</value>
   </data>
   <data name="STR_HEAD_CAVE" xml:space="preserve">
     <value>header_cave</value>
   </data>
+  <data name="STR_HEAD_DIG" xml:space="preserve">
+    <value>header_dig</value>
+  </data>
+  <data name="STR_HEAD_ESCAPEROPE" xml:space="preserve">
+    <value>header_escaperope</value>
+  </data>
   <data name="STR_HEAD_INDEX" xml:space="preserve">
     <value>header_index</value>
   </data>
-  <data name="STR_HEAD_MAPTYPE" xml:space="preserve">
-    <value>header_maptype</value>
+  <data name="STR_HEAD_LIGHT" xml:space="preserve">
+    <value>header_light</value>
   </data>
   <data name="STR_HEAD_MUSIC" xml:space="preserve">
     <value>header_music</value>
@@ -152,6 +215,12 @@
   </data>
   <data name="STR_HEAD_WEATHER" xml:space="preserve">
     <value>header_weather</value>
+  </data>
+  <data name="STR_OBJLAYER_EVENT" xml:space="preserve">
+    <value>entity_layer</value>
+  </data>
+  <data name="STR_OBJLAYER_NAME" xml:space="preserve">
+    <value>layer_type</value>
   </data>
   <data name="STR_PREFIX_CONSOLE" xml:space="preserve">
     <value>tiled2agb: </value>

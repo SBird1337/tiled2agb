@@ -88,6 +88,177 @@ namespace tiled2agb.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die height ähnelt.
+        /// </summary>
+        internal static string STR_EVT_HEIGHT {
+            get {
+                return ResourceManager.GetString("STR_EVT_HEIGHT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die field_3 ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_F3 {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_F3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die field_b ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_FB {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_FB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die field_d ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_FD {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_FD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die flag ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_FLAG {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_FLAG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die image ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_IMG {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_IMG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die movement_area ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_MOVEMENT {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_MOVEMENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die nr ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_NR {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_NR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die rival ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_RIVAL {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_RIVAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die running_behavior ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_RUNBEHAV {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_RUNBEHAV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die sight_distance ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_SIGHT {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_SIGHT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die trainer ähnelt.
+        /// </summary>
+        internal static string STR_EVT_P_TRAINER {
+            get {
+                return ResourceManager.GetString("STR_EVT_P_TRAINER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die script_label ähnelt.
+        /// </summary>
+        internal static string STR_EVT_SCRIPT {
+            get {
+                return ResourceManager.GetString("STR_EVT_SCRIPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die evt_type ähnelt.
+        /// </summary>
+        internal static string STR_EVT_TYPE {
+            get {
+                return ResourceManager.GetString("STR_EVT_TYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die evt_item ähnelt.
+        /// </summary>
+        internal static string STR_EVTTYPE_ITEM {
+            get {
+                return ResourceManager.GetString("STR_EVTTYPE_ITEM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die evt_person ähnelt.
+        /// </summary>
+        internal static string STR_EVTTYPE_PERSON {
+            get {
+                return ResourceManager.GetString("STR_EVTTYPE_PERSON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die evt_sign ähnelt.
+        /// </summary>
+        internal static string STR_EVTTYPE_SIGN {
+            get {
+                return ResourceManager.GetString("STR_EVTTYPE_SIGN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die evt_trigger ähnelt.
+        /// </summary>
+        internal static string STR_EVTTYPE_TRIGGER {
+            get {
+                return ResourceManager.GetString("STR_EVTTYPE_TRIGGER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die evt_warp ähnelt.
+        /// </summary>
+        internal static string STR_EVTTYPE_WARP {
+            get {
+                return ResourceManager.GetString("STR_EVTTYPE_WARP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die header_battletype ähnelt.
         /// </summary>
         internal static string STR_HEAD_BATTLETYPE {
@@ -106,6 +277,24 @@ namespace tiled2agb.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_dig ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_DIG {
+            get {
+                return ResourceManager.GetString("STR_HEAD_DIG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_escaperope ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_ESCAPEROPE {
+            get {
+                return ResourceManager.GetString("STR_HEAD_ESCAPEROPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die header_index ähnelt.
         /// </summary>
         internal static string STR_HEAD_INDEX {
@@ -115,11 +304,11 @@ namespace tiled2agb.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die header_maptype ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_light ähnelt.
         /// </summary>
-        internal static string STR_HEAD_MAPTYPE {
+        internal static string STR_HEAD_LIGHT {
             get {
-                return ResourceManager.GetString("STR_HEAD_MAPTYPE", resourceCulture);
+                return ResourceManager.GetString("STR_HEAD_LIGHT", resourceCulture);
             }
         }
         
@@ -165,6 +354,24 @@ namespace tiled2agb.Properties {
         internal static string STR_HEAD_WEATHER {
             get {
                 return ResourceManager.GetString("STR_HEAD_WEATHER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die entity_layer ähnelt.
+        /// </summary>
+        internal static string STR_OBJLAYER_EVENT {
+            get {
+                return ResourceManager.GetString("STR_OBJLAYER_EVENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die layer_type ähnelt.
+        /// </summary>
+        internal static string STR_OBJLAYER_NAME {
+            get {
+                return ResourceManager.GetString("STR_OBJLAYER_NAME", resourceCulture);
             }
         }
         

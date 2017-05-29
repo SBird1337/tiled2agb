@@ -28,8 +28,7 @@ namespace tiled2agb
             {
                 Console.WriteLine("error: unhandled exception: {0}", ex.Message);
             }
-            Console.WriteLine(output);
-            File.WriteAllText(Path.Combine(mappath, "alabastia.S"), output);
+            File.WriteAllText(Path.Combine(@"D:\cygwin\home\Philipp\sots\source_of_the_sovereign\src\test", "alabastia.S"), output);
             Console.ReadLine();
         }
     }

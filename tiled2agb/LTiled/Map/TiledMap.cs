@@ -25,7 +25,7 @@ namespace tiled2agb.LTiled.Map
         public List<TiledLayer> Layers { get; set; }
 
         [XmlElement(ElementName = "objectgroup")]
-        public List<TiledObjectGroup> ObjectGroup { get; set; }
+        public List<TiledObjectGroup> ObjectGroups { get; set; }
 
         [XmlAttribute(AttributeName = "version")]
         public string Version { get; set; }

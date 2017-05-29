@@ -9,7 +9,7 @@ using tiled2agb.LTiled.Common;
 namespace tiled2agb.LTiled.Map
 {
     [XmlRoot(ElementName = "objectgroup")]
-    public class TiledObjectGroup
+    public class TiledObjectGroup : IPropertyContainer
     {
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }

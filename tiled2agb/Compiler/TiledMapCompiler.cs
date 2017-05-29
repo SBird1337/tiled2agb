@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using System.IO;
 using map2agblib.Map;
 using tiled2agb.LTiled.Extensions;
+using map2agblib.Map.Event;
 
 namespace tiled2agb.Compiler
 {
@@ -54,18 +55,21 @@ namespace tiled2agb.Compiler
                 Context.ExitError("could not deserialize map file(s): {0}", ex, ex.Message);
                 return null;
             }
-            
+
             /* Tiled Map is loaded, we need to create libmap2agb maps now */
             MapHeader header = new MapHeader();
             header.ShowName = (byte)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_SHOW_NAME, Context, map.MapLayer);
             header.Music = (ushort)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_MUSIC, Context, map.MapLayer);
             header.Weather = (byte)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_WEATHER, Context, map.MapLayer);
-            header.Type = (byte)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_MAPTYPE, Context, map.MapLayer);
+            header.Light = (byte)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_LIGHT, Context, map.MapLayer);
             header.BattleStyle = (byte)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_BATTLETYPE, Context, map.MapLayer);
-            header.Flash = (byte)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_CAVE, Context, map.MapLayer);
+            header.Cave = (byte)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_CAVE, Context, map.MapLayer);
             header.Name = (byte)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_NAME, Context, map.MapLayer);
             header.Index = (ushort)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_INDEX, Context, map.MapLayer);
-            header.Unknown = (ushort)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_UNKNOWN, Context, map.MapLayer);
+            header.Unknown = (byte)map.MapLayer.Properties.RetrieveFormattedInt(Resources.STR_HEAD_UNKNOWN, Context, map.MapLayer);
+            bool escapeRope = map.MapLayer.Properties.RetrieveBoolean(Resources.STR_HEAD_ESCAPEROPE, Context, map.MapLayer);
+            bool canDig = map.MapLayer.Properties.RetrieveBoolean(Resources.STR_HEAD_DIG, Context, map.MapLayer);
+            header.EscapeRope = (byte)((escapeRope ? (1 << 1) : 0) | (canDig ? 1 : 0));
 
             header.Footer = new MapFooter();
             header.Footer.FirstTilesetInternal = 0x082D49B8;
@@ -83,10 +87,43 @@ namespace tiled2agb.Compiler
             /* Build the map block */
             header.Footer.MapBlock = Fill2DMap(map.MapTiles, map.Child.Width, map.Child.Height, map.Child);
             FillCollisionMap(map.CollisionTiles, map.Child.Width, map.Child.Height, map.Child, header.Footer.MapBlock);
-            Context.ExitCode = CompilerExitCode.EXIT_SUCCESS;
 
+            EventHeader mapEventHeader = new EventHeader();
+            TiledObjectGroup eventGroup = map.Child.ObjectGroups.GetObjectByMatchingProperties(Resources.STR_OBJLAYER_NAME, Resources.STR_OBJLAYER_EVENT, Context);
+            if (eventGroup == null)
+                Context.ExitError("could not find entity layer in object layers");
+            foreach (TiledObject obj in eventGroup.Objects)
+            {
+                if (obj.GlobalIdentifier.TileGetTileObject(map.Child.TilesetDefinitions, Context).Type == Resources.STR_EVTTYPE_PERSON)
+                {
+                    EventEntityPerson person = new EventEntityPerson();
+                    person.Id = (byte)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_P_NR, Context, obj, false, 0);
+                    person.Picture = (byte)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_P_IMG, Context, obj, false, 0);
+                    person.Field2 = (byte)(obj.Properties.RetrieveBoolean(Resources.STR_EVT_P_RIVAL, Context, obj, false, false) ? 1 : 0);
+                    person.Field3 = (byte)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_P_F3, Context, obj, false, 0);
+                    person.X = (short)(obj.X / 16);
+                    person.Y = (short)(obj.Y / 16);
+                    person.Height = (byte)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_HEIGHT, Context, obj, false, 0);
+                    person.Behaviour = (byte)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_P_RUNBEHAV, Context, obj, false, 0);
+                    person.Movement = (byte)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_P_MOVEMENT, Context, obj, false, 0);
+                    person.FieldB = (byte)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_P_FB, Context, obj, false, 0);
+                    person.IsTrainer = (byte)(obj.Properties.RetrieveBoolean(Resources.STR_EVT_P_TRAINER, Context, obj, false, false) ? 1 : 0);
+                    person.FieldD = (byte)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_P_FD, Context, obj, false, 0);
+                    person.AlertRadius = (ushort)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_P_SIGHT, Context, obj, false, 0);
+                    person.Script = obj.Properties.RetrieveString(Resources.STR_EVT_SCRIPT, Context, obj, false, "");
+                    person.Flag = (ushort)obj.Properties.RetrieveFormattedInt(Resources.STR_EVT_P_FLAG, Context, obj, false, 0x200);
+                    person.Padding = 0x0000;
+
+                    mapEventHeader.Persons.Add(person);
+                }
+            }
+
+            header.Events = mapEventHeader;
             StringBuilder sb = new StringBuilder();
             MapHeaderCompile(Context, header, sb, mapPath);
+
+            Context.ExitCode = CompilerExitCode.EXIT_SUCCESS;
+
             return sb.ToString();
         }
         private ushort[][] Fill2DMap(List<uint> tiles, uint width, uint height, TiledMap baseMap)
@@ -97,7 +134,7 @@ namespace tiled2agb.Compiler
                 output[y] = new ushort[width];
                 for (int x = 0; x < width; ++x)
                 {
-                    uint tile = tiles[(int)(y * height + x)].TileGetRelativeId(baseMap.TilesetDefinitions, Context);
+                    uint tile = tiles[(int)(y * width + x)].TileGetRelativeId(baseMap.TilesetDefinitions, Context);
                     if (tile > 0xFFFF)
                     {
                         Context.ExitError("relative tile id is too big for output map: {0}", tile);
@@ -114,8 +151,8 @@ namespace tiled2agb.Compiler
             {
                 for (int x = 0; x < width; ++x)
                 {
-                    uint tile = collisionTiles[(int)(y * height + x)];
-                    uint collisionData = tile.TileGetIntProperty(baseMap.TilesetDefinitions, Context, Resources.STR_COL_DATA, false, 0);
+                    uint tile = collisionTiles[(int)(y * width + x)];
+                    uint collisionData = tile.TileGetFormattedInt(baseMap.TilesetDefinitions, Context, Resources.STR_COL_DATA, false);
                     if (collisionData > 0x3F)
                     {
                         Context.ExitError("collision id is too big for output map: {0}", collisionData);
@@ -131,6 +168,7 @@ namespace tiled2agb.Compiler
             string file = "file: " + mapFile;
             string prog = "converted using tiled2agb";
             string date = "converted on " + DateTime.Now.ToShortDateString();
+            string author = "program created by Sturmvogel";
             int len = Math.Max(Math.Max(file.Length, date.Length), prog.Length) + 25;
             builder.AppendLine(new string('@', len));
             builder.AppendLine(("@" + new string(' ', len - 2) + "@"));
@@ -146,6 +184,10 @@ namespace tiled2agb.Compiler
             builder.Append(date + new string(' ', (int)Math.Ceiling((decimal)(len - date.Length - 2) / 2)));
             builder.AppendLine("@");
 
+            builder.Append("@" + new string(' ', (len - author.Length - 2) / 2));
+            builder.Append(author + new string(' ', (int)Math.Ceiling((decimal)(len - author.Length - 2) / 2)));
+            builder.AppendLine("@");
+
             builder.AppendLine("@" + new string(' ', len - 2) + "@");
             builder.AppendLine(new string('@', len));
             builder.AppendLine();
@@ -156,31 +198,32 @@ namespace tiled2agb.Compiler
 
             builder.AppendLine(".align 2");
             builder.AppendLine(".global mapheader_" + baseSymbol);
-            builder.AppendLine("mapheader_" + baseSymbol);
+            builder.AppendLine("mapheader_" + baseSymbol + ":");
 
             builder.AppendLine("\t.word mapfooter_" + baseSymbol);
 
             //TODO: Events
-            builder.AppendLine("\t.word " + (0x083B4C9C).ToString("X8"));
+            builder.AppendLine("\t.word mapevents_" + baseSymbol);
 
             //TODO: Scripts
-            builder.AppendLine("\t.word " + (0x081653C2).ToString("X8"));
+            builder.AppendLine("\t.word " + "0x" + (0x0816545A).ToString("X8"));
 
             //TODO: Connections
-            builder.AppendLine("\t.word " + (0x08352690).ToString("X8"));
+            builder.AppendLine("\t.word " + "0x" + (0x0835276C).ToString("X8"));
 
-            builder.AppendLine("\t.hword " + header.Music.ToString("X4"));
-            builder.AppendLine("\t.hword " + header.Index.ToString("X4"));
-            builder.AppendLine("\t.byte " + header.Name.ToString("X2"));
-            builder.AppendLine("\t.byte " + header.Flash.ToString("X2"));
-            builder.AppendLine("\t.byte " + header.Weather.ToString("X2"));
-            builder.AppendLine("\t.byte " + header.Type.ToString("X2"));
-            builder.AppendLine("\t.hword " + header.Unknown.ToString("X4"));
-            builder.AppendLine("\t.byte " + header.ShowName.ToString("X2"));
-            builder.AppendLine("\t.byte " + header.BattleStyle.ToString("X2"));
+            builder.AppendLine("\t.hword " + "0x" + header.Music.ToString("X4") + " @music");
+            builder.AppendLine("\t.hword " + "0x" + header.Index.ToString("X4") + " @index");
+            builder.AppendLine("\t.byte " + "0x" + header.Name.ToString("X2") + " @name");
+            builder.AppendLine("\t.byte " + "0x" + header.Cave.ToString("X2") + " @cave");
+            builder.AppendLine("\t.byte " + "0x" + header.Weather.ToString("X2") + " @weather");
+            builder.AppendLine("\t.byte " + "0x" + header.Light.ToString("X2") + " @light");
+            builder.AppendLine("\t.byte " + "0x" + header.Unknown.ToString("X2") + " @unknown");
+            builder.AppendLine("\t.hword " + "0x" + header.ShowName.ToString("X4") + " @showName");
+            builder.AppendLine("\t.byte " + "0x" + header.BattleStyle.ToString("X2") + " @battleStyle");
             builder.AppendLine();
 
             MapFooterCompile(context, header.Footer, builder, baseSymbol);
+            MapEventsCompile(context, header.Events, builder, baseSymbol);
         }
 
         private void MapFooterCompile(CompilerContext context, MapFooter footer, StringBuilder builder, string baseSymbol)
@@ -191,12 +234,12 @@ namespace tiled2agb.Compiler
             builder.AppendLine(".align 2");
             builder.AppendLine(".global mapfooter_" + baseSymbol);
             builder.AppendLine("mapfooter_" + baseSymbol + ":");
-            builder.AppendLine("\t.word " + footer.Width.ToString("X8"));
-            builder.AppendLine("\t.word " + footer.Height.ToString("X8"));
+            builder.AppendLine("\t.word " + "0x" + footer.Width.ToString("X8"));
+            builder.AppendLine("\t.word " + "0x" + footer.Height.ToString("X8"));
             builder.AppendLine("\t.word mapborderblocks_" + baseSymbol);
             builder.AppendLine("\t.word mapblocks_" + baseSymbol);
-            builder.AppendLine("\t.word " + (0x082D49B8).ToString("X8"));
-            builder.AppendLine("\t.word " + (0x082D49D0).ToString("X8"));
+            builder.AppendLine("\t.word " + "0x" + (0x082D4A94).ToString("X8"));
+            builder.AppendLine("\t.word " + "0x" + (0x082D4AAC).ToString("X8"));
             builder.AppendLine("\t.byte " + footer.BorderWidth.ToString());
             builder.AppendLine("\t.byte " + footer.BorderHeight.ToString());
             builder.AppendLine("\t.hword " + footer.Padding);
@@ -223,12 +266,55 @@ namespace tiled2agb.Compiler
         {
             for (int i = 0; i < blocks.Length; i++)
             {
-                for (int j = 0; j < blocks[i].Length; j++)
+                List<ushort> currentRow = new List<ushort>();
+                currentRow.AddRange(blocks[i]);
+                builder.Append("\t.hword ");
+                builder.AppendLine(string.Join(",", currentRow.ConvertAll(m => "0x" + m.ToString("X4"))));
+            }
+        }
+
+        private void MapEventsCompile(CompilerContext context, EventHeader events, StringBuilder builder, string baseSymbol)
+        {
+            builder.AppendLine("@@@  SECTION: MAPFOOTER  @@@");
+            builder.AppendLine();
+            builder.AppendLine(".align 2");
+            builder.AppendLine(".global mapevents_" + baseSymbol);
+            builder.AppendLine("mapevents_" + baseSymbol + ":");
+
+            builder.AppendFormat(".byte\t0x{0}, 0x{1}, 0x{2}, 0x{3}{4}", events.Persons.Count.ToString("X2"),
+                events.Warps.Count.ToString("X2"), events.ScriptTriggers.Count.ToString("X2"), events.Signs.Count.ToString("X2"), Environment.NewLine);
+            builder.AppendLine(".word \t" + (events.Persons.Count > 0 ? ("mapevents_persons_" + baseSymbol) : (0x0).ToString("X8")));
+            builder.AppendLine(".word \t" + (events.Warps.Count > 0 ? ("mapevents_warps_" + baseSymbol) : (0x0).ToString("X8")));
+            builder.AppendLine(".word \t" + (events.ScriptTriggers.Count > 0 ? ("mapevents_triggers_" + baseSymbol) : (0x0).ToString("X8")));
+            builder.AppendLine(".word \t" + (events.Signs.Count > 0 ? ("mapevents_signs_" + baseSymbol) : (0x0).ToString("X8")));
+            builder.AppendLine();
+
+            if (events.Persons.Count > 0)
+            {
+
+                /* compile persons */
+                builder.AppendLine("@@@ SECTION: PERSON EVENTS @@@");
+                builder.AppendLine(".align 2");
+                builder.AppendLine("mapevents_persons_" + baseSymbol + ":");
+                for(int i = 0; i < events.Persons.Count; ++i)
                 {
-                    List<ushort> currentRow = new List<ushort>();
-                    currentRow.AddRange(blocks[i]);
-                    builder.Append("\t.hword ");
-                    builder.AppendLine(string.Join(",", currentRow.ConvertAll(m => m.ToString("X4"))));
+                    builder.AppendLine("@//new structure");
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].Id.ToString("X2"));
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].Picture.ToString("X2"));
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].Field2.ToString("X2"));
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].Field3.ToString("X2"));
+                    builder.AppendLine("\t.hword " + "0x" + events.Persons[i].X.ToString("X4"));
+                    builder.AppendLine("\t.hword " + "0x" + events.Persons[i].Y.ToString("X4"));
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].Height.ToString("X2"));
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].Behaviour.ToString("X2"));
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].Movement.ToString("X2"));
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].FieldB.ToString("X2"));
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].IsTrainer.ToString("X2"));
+                    builder.AppendLine("\t.byte " + "0x" + events.Persons[i].FieldD.ToString("X2"));
+                    builder.AppendLine("\t.hword " + "0x" + events.Persons[i].AlertRadius.ToString("X4"));
+                    builder.AppendLine("\t.word " + events.Persons[i].Script);
+                    builder.AppendLine("\t.hword " + "0x" + events.Persons[i].Flag.ToString("X4"));
+                    builder.AppendLine("\t.hword " + "0x" + events.Persons[i].Padding.ToString("X4"));
                 }
             }
         }
