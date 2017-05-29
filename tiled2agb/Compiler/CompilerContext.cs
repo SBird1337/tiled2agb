@@ -27,6 +27,14 @@ namespace tiled2agb.Compiler
         {
             CompilerError = string.Format(errorMessage, arguments);
             ExitCode = CompilerExitCode.EXIT_FAILURE;
+            throw new CompilerErrorException(CompilerError);
+        }
+
+        public void ExitError(string errorMessage, Exception innerException, params object[] arguments)
+        {
+            CompilerError = string.Format(errorMessage, arguments);
+            ExitCode = CompilerExitCode.EXIT_FAILURE;
+            throw new CompilerErrorException(CompilerError, innerException);
         }
 
         public void PushWarning(string warningMessage, params object[] arguments)

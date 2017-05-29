@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using tiled2agb.Compiler;
 using tiled2agb.LTiled.Common;
 
 namespace tiled2agb.LTiled.Tileset

@@ -61,11 +61,128 @@ namespace tiled2agb.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die border_block_map ähnelt.
+        /// </summary>
+        internal static string STR_BORDER_MAP_FILE {
+            get {
+                return ResourceManager.GetString("STR_BORDER_MAP_FILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die collision_data ähnelt.
+        /// </summary>
+        internal static string STR_COL_DATA {
+            get {
+                return ResourceManager.GetString("STR_COL_DATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die csv ähnelt.
         /// </summary>
         internal static string STR_ENCODING_CSV {
             get {
                 return ResourceManager.GetString("STR_ENCODING_CSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_battletype ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_BATTLETYPE {
+            get {
+                return ResourceManager.GetString("STR_HEAD_BATTLETYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_cave ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_CAVE {
+            get {
+                return ResourceManager.GetString("STR_HEAD_CAVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_index ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_INDEX {
+            get {
+                return ResourceManager.GetString("STR_HEAD_INDEX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_maptype ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_MAPTYPE {
+            get {
+                return ResourceManager.GetString("STR_HEAD_MAPTYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_music ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_MUSIC {
+            get {
+                return ResourceManager.GetString("STR_HEAD_MUSIC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_name ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_NAME {
+            get {
+                return ResourceManager.GetString("STR_HEAD_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_showname ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_SHOW_NAME {
+            get {
+                return ResourceManager.GetString("STR_HEAD_SHOW_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_unknown ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_UNKNOWN {
+            get {
+                return ResourceManager.GetString("STR_HEAD_UNKNOWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die header_weather ähnelt.
+        /// </summary>
+        internal static string STR_HEAD_WEATHER {
+            get {
+                return ResourceManager.GetString("STR_HEAD_WEATHER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tiled2agb:  ähnelt.
+        /// </summary>
+        internal static string STR_PREFIX_CONSOLE {
+            get {
+                return ResourceManager.GetString("STR_PREFIX_CONSOLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die border_layer ähnelt.
+        /// </summary>
+        internal static string STR_PROPERTY_LTYPE_BORDER {
+            get {
+                return ResourceManager.GetString("STR_PROPERTY_LTYPE_BORDER", resourceCulture);
             }
         }
         

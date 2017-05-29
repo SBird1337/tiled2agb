@@ -47,8 +47,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compiler\CompilerContext.cs" />
+    <Compile Include="Compiler\CompilerErrorException.cs" />
+    <Compile Include="Compiler\TiledMapCompiler.cs" />
     <Compile Include="LTiled\Common\IPropertyContainer.cs" />
+    <Compile Include="LTiled\Common\Utility\Csv.cs" />
     <Compile Include="LTiled\Extensions\ListExtensions.cs" />
+    <Compile Include="LTiled\Extensions\PrimitiveExtensions.cs" />
+    <Compile Include="LTiled\Extensions\StringExtensions.cs" />
+    <Compile Include="LTiled\Map\BorderMap.cs" />
+    <Compile Include="LTiled\Map\MainMap.cs" />
     <Compile Include="LTiled\Map\TiledLayer.cs" />
     <Compile Include="LTiled\Map\TiledMap.cs" />
     <Compile Include="LTiled\Map\TiledMapData.cs" />
@@ -79,6 +86,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\Desktop\map2agblib\map2agblib.csproj">
+      <Project>{0dcb2103-4515-436c-8cca-a37267f1ed09}</Project>
+      <Name>map2agblib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

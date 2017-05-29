@@ -117,8 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="STR_BORDER_MAP_FILE" xml:space="preserve">
+    <value>border_block_map</value>
+  </data>
+  <data name="STR_COL_DATA" xml:space="preserve">
+    <value>collision_data</value>
+  </data>
   <data name="STR_ENCODING_CSV" xml:space="preserve">
     <value>csv</value>
+  </data>
+  <data name="STR_HEAD_BATTLETYPE" xml:space="preserve">
+    <value>header_battletype</value>
+  </data>
+  <data name="STR_HEAD_CAVE" xml:space="preserve">
+    <value>header_cave</value>
+  </data>
+  <data name="STR_HEAD_INDEX" xml:space="preserve">
+    <value>header_index</value>
+  </data>
+  <data name="STR_HEAD_MAPTYPE" xml:space="preserve">
+    <value>header_maptype</value>
+  </data>
+  <data name="STR_HEAD_MUSIC" xml:space="preserve">
+    <value>header_music</value>
+  </data>
+  <data name="STR_HEAD_NAME" xml:space="preserve">
+    <value>header_name</value>
+  </data>
+  <data name="STR_HEAD_SHOW_NAME" xml:space="preserve">
+    <value>header_showname</value>
+  </data>
+  <data name="STR_HEAD_UNKNOWN" xml:space="preserve">
+    <value>header_unknown</value>
+  </data>
+  <data name="STR_HEAD_WEATHER" xml:space="preserve">
+    <value>header_weather</value>
+  </data>
+  <data name="STR_PREFIX_CONSOLE" xml:space="preserve">
+    <value>tiled2agb: </value>
+  </data>
+  <data name="STR_PROPERTY_LTYPE_BORDER" xml:space="preserve">
+    <value>border_layer</value>
   </data>
   <data name="STR_PROPERTY_LTYPE_COLLISION" xml:space="preserve">
     <value>collision_layer</value>

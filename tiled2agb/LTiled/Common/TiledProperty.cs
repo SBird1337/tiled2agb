@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace tiled2agb.LTiled.Common
     /// Represents a single property, its type, name and value
     /// </summary>
     [XmlRoot(ElementName = "property")]
+    [DebuggerDisplay("{Name}")]
     public class TiledProperty
     {
         /// <summary>
